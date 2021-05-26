@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>倒计时</title>
+    <style>
+        .countdown {
+            width: 500px;
+            height: 500px;
+            margin: 200px auto;
+            text-align: center;
+        }
+        
+        span {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            background-color: black;
+            line-height: 100px;
+            color: #fff;
+            font-size: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="countdown">
+        <span class="hour">1</span>
+        <span class="minute">2</span>
+        <span class="second">3</span>
+    </div>
+    <script>
+        var hour = document.querySelector('.hour');
+        var minute = document.querySelector('.minute');
+        var second = document.querySelector('.second');
+
+        var futureTime = new Date('2021-05-27 00:00:00');
+
+        countdown();
+        setInterval(countdown, 1000);
+
+        function countdown() {
+            var nowTime = +new Date();
+            var intervalTime = futureTime - nowTime;
+            intervalTime = intervalTime / 1000;
+
+            var intervalHour = parseInt(intervalTime / 60 / 60 % 24);
+            intervalHour = intervalHour < 10 ? '0' + intervalHour : intervalHour;
+            hour.innerHTML = intervalHour;
+
+            var intervalMinute = parseInt(intervalTime / 60 % 60);
+            intervalMinute = intervalMinute < 10 ? '0' + intervalMinute : intervalMinute;
+            minute.innerHTML = intervalMinute;
+
+            var intervalSecond = parseInt(intervalTime % 60);
+            intervalSecond = intervalSecond < 10 ? '0' + intervalSecond : intervalSecond;
+            second.innerHTML = intervalSecond;
+        }
+    </script>
+</body>
+
+</html>
