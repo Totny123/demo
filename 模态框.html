@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模态框</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        input {
+            border: 1px solid black;
+            outline: none;
+        }
+        
+        .mask {
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: #ccc;
+        }
+        
+        .link {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            font-size: 25px;
+            color: rgb(24, 22, 22);
+        }
+        
+        .login_div {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 300px;
+            background-color: #fff;
+        }
+        
+        .login_div label {
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            margin: 5px 0;
+            line-height: 50px;
+            text-align: right;
+        }
+        
+        .login_header {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        #username,
+        #password {
+            width: 300px;
+            height: 30px;
+            font-size: 16px;
+        }
+        
+        #username:focus,
+        #password:focus {
+            border: 1px solid rgb(34, 131, 221);
+        }
+        
+        .login_btn {
+            display: block;
+            width: 250px;
+            height: 40px;
+            margin: 15px auto;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        
+        .close_btn {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="mask"></div>
+    <a href="javascript:;" class="link">点击，弹出登录框</a>
+    <div class="login_div">
+        <div class="login_header">登录会员</div>
+        <label for="username">用户名：</label><input type="text" name="username" id="username" placeholder="请输入用户名"><br>
+        <label for="password">登录密码：</label><input type="password" name="password" id="password" placeholder="请输入登录密码"><br>
+        <input type="submit" value="登录会员" class="login_btn">
+        <button class="close_btn">关闭</button>
+    </div>
+    <script>
+        var link = document.querySelector('.link');
+        var close_btn = document.querySelector('.close_btn');
+        var mask = document.querySelector('.mask');
+        var login_div = document.querySelector('.login_div');
+        link.addEventListener('click', function() {
+            mask.style.display = 'block';
+            login_div.style.display = 'block';
+        });
+        close_btn.addEventListener('click', function() {
+            mask.style.display = 'none';
+            login_div.style.display = 'none';
+        });
+        login_div.addEventListener('mousedown', function(e) {
+            this.style.cursor = 'move';
+            var down_x = e.pageX;
+            var down_y = e.pageY;
+            var box_x = this.offsetLeft;
+            var box_y = this.offsetTop;
+            document.onmousemove = function(e) {
+                var move_x = e.pageX;
+                var move_y = e.pageY;
+                login_div.style.top = box_y + move_y - down_y + 'px';
+                login_div.style.left = box_x + move_x - down_x + 'px';
+            }
+
+        })
+        login_div.addEventListener('mouseup', function() {
+            this.style.cursor = 'default';
+            document.onmousemove = null;
+        })
+    </script>
+</body>
+
+</html>
